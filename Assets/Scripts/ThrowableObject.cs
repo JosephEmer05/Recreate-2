@@ -2,10 +2,10 @@
 
 public class ThrowableObject : MonoBehaviour
 {
-    [SerializeField] private Transform playerCamera; // Reference to the player’s camera
-    [SerializeField] private float holdDistance = 2f; // Distance in front of the player
-    [SerializeField] private float throwForce = 10f; // Force applied when throwing
-    [SerializeField] private float followSpeed = 10f; // Speed at which the object moves while carried
+    [SerializeField] private Transform playerCamera;
+    [SerializeField] private float holdDistance = 2f;
+    [SerializeField] private float throwForce = 10f;
+    [SerializeField] private float followSpeed = 10f;
 
     private bool isBeingDragged = false;
     private Rigidbody rb;
@@ -17,7 +17,6 @@ public class ThrowableObject : MonoBehaviour
 
     private void Update()
     {
-        // Raycast infinitely and only pick up the first "ThrowableObject" in sight
         Ray ray = new Ray(playerCamera.position, playerCamera.forward);
         RaycastHit hit;
 
@@ -25,20 +24,18 @@ public class ThrowableObject : MonoBehaviour
                          hit.collider.GetComponent<ThrowableObject>() != null &&
                          hit.collider.gameObject == gameObject;
 
-        // Pick up object when looking at it and pressing E
         if (canPickUp && Input.GetKeyDown(KeyCode.E))
         {
             PickUp();
         }
 
-        // Drop or throw the object when holding it
         if (isBeingDragged)
         {
-            if (Input.GetMouseButtonDown(0)) // Left Click → Drop
+            if (Input.GetMouseButtonDown(0))
             {
                 Drop();
             }
-            else if (Input.GetMouseButtonDown(1)) // Right Click → Throw
+            else if (Input.GetMouseButtonDown(1))
             {
                 Throw();
             }
@@ -50,22 +47,22 @@ public class ThrowableObject : MonoBehaviour
         if (isBeingDragged)
         {
             Vector3 targetPosition = playerCamera.position + playerCamera.forward * holdDistance;
-            rb.linearVelocity = (targetPosition - transform.position) * followSpeed; // Smooth movement with gravity
+            rb.linearVelocity = (targetPosition - transform.position) * followSpeed;
         }
     }
 
     private void PickUp()
     {
         isBeingDragged = true;
-        rb.useGravity = true; // Allow gravity
-        rb.linearDamping = 5f; // Add slight drag for smooth movement
+        rb.useGravity = true;
+        rb.linearDamping = 5f;
     }
 
     private void Drop()
     {
         isBeingDragged = false;
         rb.useGravity = true;
-        rb.linearDamping = 0f; // Reset drag
+        rb.linearDamping = 0f;
     }
 
     private void Throw()
