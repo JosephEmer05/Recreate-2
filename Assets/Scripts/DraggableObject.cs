@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class DraggableObject : MonoBehaviour
+/*public class DraggableObject : MonoBehaviour
 {
     [SerializeField] private float pickupRange = 2f;
     [SerializeField] private Transform player;
@@ -83,4 +83,4 @@ public class DraggableObject : MonoBehaviour
 
         transform.position = Vector3.Lerp(transform.position, worldPosition, Time.deltaTime * 10f);
     }
-}
+}*/
